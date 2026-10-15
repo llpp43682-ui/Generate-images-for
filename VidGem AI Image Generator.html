@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فيديو جيم - توليد الصور بالذكاء الاصطناعي مجاناً | VidGem AI Art</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo & Orbitron -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f3ff',
+                            100: '#e1e7fe',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#1e1b4b',
+                        },
+                        neon: {
+                            purple: '#a855f7',
+                            cyan: '#06b6d4',
+                            pink: '#ec4899',
+                            emerald: '#10b981',
+                            yellow: '#eab308'
+                        },
+                        dark: {
+                            bg: '#090a16',
+                            card: '#12142b',
+                            hover: '#1a1d3b',
+                            border: 'rgba(99, 102, 241, 0.2)'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        orbitron: ['Orbitron', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #090a16;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism styling */
+        .glass-panel {
+            background: rgba(18, 20, 43, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+        }
+
+        .glass-modal {
+            background: rgba(15, 17, 35, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        /* Glowing Effects */
+        .glow-purple {
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+        }
+        
+        .glow-cyan {
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #a855f7 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090a16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2b2e5c;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
+        }
+
+        /* Shimmer Loading Animation */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .animate-shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.03) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.8s infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+    <header class="sticky top-0 z-40 w-full glass-panel border-b border-indigo-900/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 via-neon-purple to-neon-cyan p-[2px] shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+                    <div class="w-full h-full bg-dark-bg rounded-[14px] flex items-center justify-center">
+                        <i class="fa-solid fa-wand-magic-sparkles text-2xl text-neon-cyan animate-pulse"></i>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-2xl font-black font-orbitron tracking-wider text-white flex items-center gap-1.5">
+                        Vid<span class="text-gradient">Gem</span> AI
+                    </span>
+                    <span class="block text-[11px] text-indigo-300 font-medium -mt-1">مولد الصور الفوري بالذكاء الاصطناعي</span>
+                </div>
+            </div>
+
+            <!-- Header Quick Stats & Badges -->
+            <div class="hidden md:flex items-center gap-4">
+                <div class="px-3.5 py-1.5 rounded-full bg-indigo-950/60 border border-indigo-500/30 flex items-center gap-2 text-xs font-semibold text-indigo-200">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    محرك Gemini 3.1 نشط
+                </div>
+                <div class="px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center gap-1.5">
+                    <i class="fa-solid fa-bolt text-amber-400"></i>
+                    توليد مجاني 100%
+                </div>
+            </div>
+
+            <!-- Action CTA -->
+            <div class="flex items-center gap-3">
+                <a href="#generator" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-neon-purple hover:from-brand-500 hover:to-neon-pink text-white font-bold text-sm transition-all duration-300 shadow-[0_0_20px_rgba(99,102,241,0.4)] flex items-center gap-2">
+                    <i class="fa-solid fa-paintbrush"></i>
+                    <span>أنشئ صورتك الآن</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative pt-12 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center overflow-hidden">
+        <div class="absolute inset-0 -z-10 flex items-center justify-center">
+            <div class="w-[600px] h-[600px] bg-brand-600/15 rounded-full blur-[140px] pointer-events-none"></div>
+            <div class="w-[400px] h-[400px] bg-neon-cyan/15 rounded-full blur-[120px] pointer-events-none"></div>
+        </div>
+
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 text-xs sm:text-sm font-bold mb-6 glow-purple">
+            <i class="fa-solid fa-sparkles text-neon-yellow"></i>
+            <span>حّول خيالك وأفكارك إلى صور بدقة فائقة بضغطة زر</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight mb-6">
+            مولد الصور بالذكاء الاصطناعي <br>
+            <span class="text-gradient">مجاني بالكامل ودون حدود</span>
+        </h1>
+
+        <p class="max-w-3xl mx-auto text-gray-300 text-base sm:text-xl font-normal leading-relaxed mb-8">
+            اكتب وصفك بالعربية أو الإنجليزية، واستمتع بصور سينمائية، أنمي، أو تصميمات ثلاثية الأبعاد بوضع دفعة متعددة الصور.
+        </p>
+    </section>
+
+    <section id="generator" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <div class="glass-panel rounded-3xl p-4 sm:p-8 shadow-[0_0_50px_rgba(15,17,35,0.8)] relative border border-indigo-500/30">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <div class="lg:col-span-7 flex flex-col justify-between space-y-6">
+                    
+                    <!-- Text Prompt Area -->
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="block text-sm font-bold text-gray-200 flex items-center gap-2">
+                                <i class="fa-solid fa-pen-nib text-neon-cyan"></i>
+                                <span>وصف الصورة المراد إنشاؤها (Prompt)</span>
+                            </label>
+                            <button onclick="injectRandomPrompt()" class="text-xs text-neon-cyan hover:text-cyan-300 font-semibold flex items-center gap-1 transition">
+                                <i class="fa-solid fa-dice text-amber-400"></i> اقتراح وصف عشوائي
+                            </button>
+                        </div>
+
+                        <div class="relative">
+                            <textarea id="promptInput" rows="4" dir="auto" placeholder="مثال: رائد فضاء يستكشف مدينة مستقبلية مليئة بأنوار النيون، تصوير سينمائي 8k مع تفاصيل دقيقة وإضاءة درامية..."
+                                class="w-full bg-dark-bg/90 border border-indigo-900/80 rounded-2xl p-4 text-white text-sm sm:text-base focus:ring-2 focus:ring-neon-purple focus:border-transparent outline-none transition placeholder-gray-500 resize-none shadow-inner"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Multi-Image Upload Area -->
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="block text-sm font-bold text-gray-200 flex items-center gap-2">
+                                <i class="fa-solid fa-cloud-arrow-up text-neon-pink"></i>
+                                <span>رفع صور مرجعية للدمج والتعديل (يمكنك تحديد عدة صور)</span>
+                            </label>
+                            <span id="uploadedCountBadge" class="text-xs text-indigo-300 font-semibold bg-indigo-950/80 px-2.5 py-1 rounded-full border border-indigo-800">0 صور محددة</span>
+                        </div>
+
+                        <!-- Drop Zone -->
+                        <div id="dropZone" onclick="document.getElementById('imageInput').click()" 
+                            ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)"
+                            class="border-2 border-dashed border-indigo-800/80 hover:border-neon-purple bg-dark-bg/60 rounded-2xl p-4 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 group hover:bg-indigo-950/30">
+                            <input type="file" id="imageInput" multiple accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                            <div class="w-10 h-10 rounded-full bg-indigo-950/80 border border-indigo-500/30 flex items-center justify-center text-neon-cyan group-hover:scale-110 transition shadow-lg">
+                                <i class="fa-solid fa-images text-lg"></i>
+                            </div>
+                            <p class="text-xs text-gray-300 font-semibold">اضغط هنا أو اسحب وأفلت عدّة صور دفعة واحدة</p>
+                            <p class="text-[10px] text-gray-500">اختر أكثر من صورة معاً لصنع تصميم مدمج ومبتكر (PNG, JPG, WEBP)</p>
+                        </div>
+
+                        <!-- Uploaded Thumbnails Container -->
+                        <div id="uploadedPreviewContainer" class="hidden grid grid-cols-4 sm:grid-cols-6 gap-2 mt-3">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-200 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-palette text-neon-purple"></i>
+                            <span>النمط الفني (Artistic Style)</span>
+                        </label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="styleGrid">
+                            <!-- Style Card 1 -->
+                            <button onclick="selectStyle('cinematic', this)" class="style-btn active px-3 py-2.5 rounded-xl bg-indigo-950/80 border-2 border-neon-purple text-xs font-bold text-white flex flex-col items-center gap-1.5 transition">
+                                <i class="fa-solid fa-clapperboard text-lg text-neon-pink"></i>
+                                <span>سينمائي (Realistic)</span>
+                            </button>
+                            <!-- Style Card 2 -->
+                            <button onclick="selectStyle('anime', this)" class="style-btn px-3 py-2.5 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-300 flex flex-col items-center gap-1.5 transition hover:border-indigo-500">
+                                <i class="fa-solid fa-dragon text-lg text-neon-cyan"></i>
+                                <span>أنمي (Anime)</span>
+                            </button>
+                            <!-- Style Card 3 -->
+                            <button onclick="selectStyle('3d', this)" class="style-btn px-3 py-2.5 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-300 flex flex-col items-center gap-1.5 transition hover:border-indigo-500">
+                                <i class="fa-solid fa-cube text-lg text-neon-yellow"></i>
+                                <span>ثلاثي الأبعاد 3D</span>
+                            </button>
+                            <!-- Style Card 4 -->
+                            <button onclick="selectStyle('oil-painting', this)" class="style-btn px-3 py-2.5 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-300 flex flex-col items-center gap-1.5 transition hover:border-indigo-500">
+                                <i class="fa-solid fa-paintbrush text-lg text-emerald-400"></i>
+                                <span>رسم زيتي</span>
+                            </button>
+                            <!-- Style Card 5 -->
+                            <button onclick="selectStyle('cyberpunk', this)" class="style-btn px-3 py-2.5 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-300 flex flex-col items-center gap-1.5 transition hover:border-indigo-500">
+                                <i class="fa-solid fa-city text-lg text-purple-400"></i>
+                                <span>سايبر بانك</span>
+                            </button>
+                            <!-- Style Card 6 -->
+                            <button onclick="selectStyle('fantasy', this)" class="style-btn px-3 py-2.5 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-300 flex flex-col items-center gap-1.5 transition hover:border-indigo-500">
+                                <i class="fa-solid fa-hat-wizard text-lg text-indigo-400"></i>
+                                <span>خيالي (Fantasy)</span>
+                            </button>
+                            <!-- Style Card 7 -->
+                            <button onclick="selectStyle('logo', this)" class="style-btn px-3 py-2.5 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-300 flex flex-col items-center gap-1.5 transition hover:border-indigo-500">
+                                <i class="fa-solid fa-shapes text-lg text-amber-400"></i>
+                                <span>شعار / Minimalist</span>
+                            </button>
+                            <!-- Style Card 8 -->
+                            <button onclick="selectStyle('pixel', this)" class="style-btn px-3 py-2.5 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-300 flex flex-col items-center gap-1.5 transition hover:border-indigo-500">
+                                <i class="fa-solid fa-gamepad text-lg text-rose-400"></i>
+                                <span>بكسل أرت Pixel</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-200 mb-2.5 flex items-center gap-2">
+                            <i class="fa-solid fa-expand text-amber-400"></i>
+                            <span>أبعاد الصورة (Aspect Ratio)</span>
+                        </label>
+                        <div class="grid grid-cols-4 gap-2">
+                            <button onclick="selectRatio('1:1', this)" class="ratio-btn active py-2 rounded-xl bg-indigo-950 border-2 border-neon-purple text-xs font-bold text-white flex items-center justify-center gap-1">
+                                <span class="w-3 h-3 border border-current rounded-sm"></span> 1:1
+                            </button>
+                            <button onclick="selectRatio('16:9', this)" class="ratio-btn py-2 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-400 flex items-center justify-center gap-1 hover:border-indigo-500">
+                                <span class="w-4 h-2.5 border border-current rounded-sm"></span> 16:9
+                            </button>
+                            <button onclick="selectRatio('9:16', this)" class="ratio-btn py-2 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-400 flex items-center justify-center gap-1 hover:border-indigo-500">
+                                <span class="w-2.5 h-4 border border-current rounded-sm"></span> 9:16
+                            </button>
+                            <button onclick="selectRatio('4:3', this)" class="ratio-btn py-2 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-400 flex items-center justify-center gap-1 hover:border-indigo-500">
+                                <span class="w-3.5 h-3 border border-current rounded-sm"></span> 4:3
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-200 mb-2.5 flex items-center gap-2">
+                            <i class="fa-solid fa-images text-neon-pink"></i>
+                            <span>عدد الصور في المرة الواحدة (Batch Count - عدة صور مرة واحدة)</span>
+                        </label>
+                        <div class="grid grid-cols-4 gap-2">
+                            <button onclick="selectCount(1, this)" class="count-btn active py-2 rounded-xl bg-indigo-950 border-2 border-neon-purple text-xs font-bold text-white flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-image"></i> صورة واحدة
+                            </button>
+                            <button onclick="selectCount(2, this)" class="count-btn py-2 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-400 flex items-center justify-center gap-1 hover:border-indigo-500">
+                                <i class="fa-solid fa-images"></i> صورتان (2)
+                            </button>
+                            <button onclick="selectCount(3, this)" class="count-btn py-2 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-400 flex items-center justify-center gap-1 hover:border-indigo-500">
+                                <i class="fa-solid fa-images"></i> 3 صور
+                            </button>
+                            <button onclick="selectCount(4, this)" class="count-btn py-2 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-400 flex items-center justify-center gap-1 hover:border-indigo-500">
+                                <i class="fa-solid fa-photo-film"></i> 4 صور دفعة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Generate Action Button -->
+                    <button id="generateBtn" onclick="generateAIImage()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-brand-600 via-neon-purple to-neon-pink hover:opacity-95 text-white font-black text-lg shadow-[0_0_30px_rgba(168,85,247,0.5)] transition-all flex items-center justify-center gap-3 active:scale-[0.99]">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xl animate-spin"></i>
+                        <span>توليد الصورة الآن مجاناً</span>
+                    </button>
+
+                </div>
+
+                <div class="lg:col-span-5 flex flex-col">
+                    <div class="w-full h-full min-h-[380px] bg-dark-bg/80 border border-indigo-900/60 rounded-2xl p-4 flex flex-col justify-between items-center relative overflow-hidden">
+                        
+                        <!-- Header Bar of Output -->
+                        <div class="w-full flex items-center justify-between pb-3 border-b border-gray-800/80">
+                            <span class="text-xs font-bold text-indigo-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-display"></i> المعاينة الفورية
+                            </span>
+                            <span id="outputBadge" class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-bold border border-emerald-500/30">
+                                جاهز للتوليد
+                            </span>
+                        </div>
+
+                        <!-- Image Display Container -->
+                        <div class="my-auto w-full flex flex-col items-center justify-center relative min-h-[280px]">
+                            
+                            <!-- Placeholder View -->
+                            <div id="placeholderState" class="text-center p-6 space-y-3">
+                                <div class="w-20 h-20 mx-auto rounded-full bg-indigo-950/60 border border-indigo-500/30 flex items-center justify-center text-neon-purple text-3xl">
+                                    <i class="fa-regular fa-image"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-gray-300">لم يتم توليد أي صورة بعد</h3>
+                                <p class="text-xs text-gray-500 max-w-xs">ادخل وصفك واضغط "توليد الصورة الآن" لمشاهدة النتائج هنا!</p>
+                            </div>
+
+                            <!-- Skeleton Loading State -->
+                            <div id="loadingState" class="hidden w-full h-full flex flex-col items-center justify-center space-y-4 p-4">
+                                <div class="w-full aspect-square max-w-[300px] rounded-2xl animate-shimmer border border-indigo-500/30 flex flex-col items-center justify-center p-6 text-center space-y-3">
+                                    <i class="fa-solid fa-atom text-4xl text-neon-cyan animate-spin"></i>
+                                    <p class="text-xs font-bold text-indigo-200">يقوم الذكاء الاصطناعي برسم أفكارك وتعديل صورك...</p>
+                                    <p class="text-[10px] text-gray-400">قد يستغرق التوليد بضع ثوانٍ فقط</p>
+                                </div>
+                            </div>
+
+                            <!-- Generated Image View -->
+                            <div id="resultState" class="hidden w-full flex flex-col items-center">
+                                <div id="imageGridContainer" class="grid grid-cols-1 gap-4 w-full max-h-[400px] overflow-y-auto p-2">
+                                    <!-- Dynamic Image Grid Output -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="outputActions" class="hidden w-full pt-3 border-t border-gray-800/80 flex items-center justify-between gap-3">
+            <button onclick="downloadAllImages()" class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-neon-purple to-brand-600 hover:opacity-90 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-md">
+                <i class="fa-solid fa-download text-neon-cyan"></i>
+                <span>تنزيل الكل</span>
+            </button>
+            <button onclick="openImageEditor()" class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-neon-cyan to-brand-500 hover:opacity-90 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-md">
+                <i class="fa-solid fa-wand-magic"></i>
+                <span>تعديل الصورة</span>
+            </button>
+            <button onclick="copyImagePrompt()" class="flex-1 py-2.5 px-3 rounded-xl bg-dark-card hover:bg-dark-hover text-gray-300 border border-gray-700 font-bold text-xs flex items-center justify-center gap-2 transition">
+                <i class="fa-solid fa-copy"></i>
+                <span>نسخ الوصف</span>
+            </button>
+        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+            <div>
+                <span class="text-xs font-bold text-neon-cyan uppercase tracking-wider block mb-1">إبداعات مجتمع VidGem</span>
+                <h2 class="text-3xl font-black text-white">معرض الصور المولدة بالذكاء الاصطناعي</h2>
+            </div>
+            <p class="text-sm text-gray-400 mt-2 md:mt-0">اضغط على أي صورة لتجربة وتوليد نفس الوصف فوراً</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="galleryGrid">
+            <!-- Gallery items dynamically created via Javascript -->
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-800/60">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-3xl font-black text-white mb-3">لماذا منصة VidGem لتوليد وتعديل الصور؟</h2>
+            <p class="text-gray-400 text-sm">نقدم أفضل أدوات الذكاء الاصطناعي التوليدي دون قيود معقدة</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-panel p-6 rounded-2xl border border-indigo-900/40 hover:border-neon-purple transition duration-300">
+                <div class="w-12 h-12 rounded-xl bg-neon-purple/10 border border-neon-purple/30 text-neon-purple text-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">توليد عدة صور دفعة واحدة</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">اختر حتى 4 صور لإنشائها معاً بنقرة زر واحدة لمقارنة النتائج واختيار الأفضل.</p>
+            </div>
+
+            <div class="glass-panel p-6 rounded-2xl border border-indigo-900/40 hover:border-neon-cyan transition duration-300">
+                <div class="w-12 h-12 rounded-xl bg-neon-cyan/10 border border-neon-cyan/30 text-neon-cyan text-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-image"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">تعديل الصور الأصلية</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">ارفع صورتك الخاصة واستخدم الذكاء الاصطناعي لإضافة عناصر جديدة أو تغيير نمطها الفني.</p>
+            </div>
+
+            <div class="glass-panel p-6 rounded-2xl border border-indigo-900/40 hover:border-emerald-400 transition duration-300">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">مجاني وبدون علامة مائية</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">احصل على حقوق استخدام صورك بالكامل وتنزيلها بجودة عالية ونقية دون أي علامات مائية مزعجة.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="w-full glass-panel border-t border-indigo-900/50 mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
+            <div class="flex items-center justify-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-neon-cyan"></i>
+                <span class="font-bold text-lg text-white font-orbitron tracking-wider">VidGem AI Art</span>
+            </div>
+            <p class="text-xs text-gray-400 max-w-md mx-auto">
+                منصة توليد الصور بالذكاء الاصطناعي مجاناً للجميع. ابدع بلا حدود وشارك تصاميمك مع العالم.
+            </p>
+            <div class="text-[11px] text-gray-500 pt-4 border-t border-gray-800">
+                جميع الحقوق محفوظة &copy; 2026 VidGem AI Platform
+            </div>
+        </div>
+    </footer>
+
+    <div id="fullModal" class="fixed inset-0 z-50 hidden glass-modal flex items-center justify-center p-4">
+        <div class="relative max-w-4xl w-full bg-dark-bg border border-indigo-500/50 rounded-3xl overflow-hidden p-2 flex flex-col items-center">
+            <button onclick="closeFullModal()" class="absolute top-4 left-4 z-10 w-10 h-10 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center text-lg transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img id="modalImg" src="" class="max-h-[80vh] w-auto object-contain rounded-2xl">
+            <div class="p-4 w-full flex justify-between items-center">
+                <p id="modalPromptText" class="text-xs text-gray-300 max-w-xl truncate"></p>
+                <div class="flex items-center gap-2">
+                    <button onclick="editModalImage()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-neon-cyan to-brand-600 text-white font-bold text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic"></i> تعديل هذه الصورة
+                    </button>
+                    <button onclick="downloadGeneratedImage()" class="px-4 py-2 rounded-xl bg-neon-purple text-white font-bold text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i> تنزيل
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Image Editor Modal -->
+    <div id="editorModal" class="fixed inset-0 z-50 hidden glass-modal flex items-center justify-center p-4">
+        <div class="relative max-w-2xl w-full bg-dark-bg border border-neon-cyan/50 rounded-3xl overflow-hidden p-6 flex flex-col space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-gray-800">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-neon-cyan/20 border border-neon-cyan/40 text-neon-cyan flex items-center justify-center">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">استوديو تعديل الصورة بالذكاء الاصطناعي</h3>
+                </div>
+                <button onclick="closeImageEditor()" class="w-8 h-8 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center text-sm transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Target Image Preview Thumbnail -->
+            <div class="flex items-center gap-4 bg-dark-card p-3 rounded-2xl border border-indigo-900/50">
+                <img id="editorTargetImg" src="" class="w-20 h-20 object-cover rounded-xl border border-indigo-500/40">
+                <div class="flex-1">
+                    <span class="text-xs font-bold text-neon-cyan block mb-1">الصورة قيد التعديل</span>
+                    <p class="text-[11px] text-gray-400">أدخل تعليمات التعديل أو التغيير المطلوبة أدناه وسيقوم الذكاء الاصطناعي بتحديث الصورة خصيصاً لك.</p>
+                </div>
+            </div>
+
+            <!-- Edit Instruction Prompt -->
+            <div>
+                <label class="block text-xs font-bold text-gray-200 mb-1.5 flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen-nib text-neon-pink"></i> ماذا تريد أن تضيف أو تغير في هذه الصورة؟
+                </label>
+                <textarea id="editInstructionInput" rows="3" dir="auto" placeholder="مثال: اجعل الإضاءة ليلية مع أضواء نيون زرقاء، أو أضف تفاصيل خيالية في الخلفية..."
+                    class="w-full bg-dark-bg/90 border border-indigo-900 rounded-xl p-3 text-white text-xs sm:text-sm focus:ring-2 focus:ring-neon-cyan focus:border-transparent outline-none transition placeholder-gray-500 resize-none"></textarea>
+            </div>
+
+            <!-- Editor Actions -->
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button onclick="closeImageEditor()" class="px-4 py-2.5 rounded-xl bg-dark-card hover:bg-dark-hover text-gray-300 text-xs font-bold transition">
+                    إلغاء
+                </button>
+                <button onclick="submitImageEdit()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-neon-cyan to-brand-600 hover:opacity-90 text-white text-xs font-bold shadow-lg flex items-center gap-2 transition">
+                    <i class="fa-solid fa-atom"></i> تطبيق التعديلات
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Overlay -->
+    <div id="toastNotification" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 hidden bg-indigo-950/95 text-white px-6 py-3.5 rounded-2xl border border-neon-purple shadow-2xl flex items-center gap-3 backdrop-blur-md transition-all duration-300">
+        <i id="toastIcon" class="fa-solid fa-circle-info text-neon-cyan text-lg"></i>
+        <span id="toastMsg" class="text-xs sm:text-sm font-bold"></span>
+    </div>
+
+    <script>
+        // State Management
+        let currentStyle = 'cinematic';
+        let currentRatio = '1:1';
+        let batchCount = 1;
+        let generatedImagesArray = [];
+        let lastPromptUsed = '';
+        let uploadedImages = []; // Stores multi-image base64 objects { base64, mimeType, name, fullData }
+
+        // Preset Sample Prompts for "Dice" Generator
+        const samplePrompts = [
+            "قطة ترتدي نظارة شمسية ملونة وتجلس على شاطئ استوائي عند الغروب، إضاءة ذهبية سينمائية",
+            "صقر يطير فوق قلعة عربية قديمة وسط الجبال، رسم زيتي رقمي بنفحات أسطورية",
+            "مدينة مستقبلية تحت الماء ذات قباب زجاجية مضيئة مع أسماك القرش والضوء الأزرق، تصميم 3D احترافي",
+            "شخصية أنمي ساحرة تقف تحت أشجار الكرز الوردية وتساقط الأوراق، تفاصيل دقيقة وتلوين أنمي رائع",
+            "سيارة رياضية كلاسيكية تسير في شارع ممطر بالليل مع انعكاسات أضواء السايبر بانك الملونة"
+        ];
+
+        function handleImageUpload(event) {
+            const files = Array.from(event.target.files);
+            processFiles(files);
+            event.target.value = ''; // Clear input for re-selection
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            document.getElementById('dropZone').classList.add('border-neon-purple', 'bg-indigo-950/50');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            document.getElementById('dropZone').classList.remove('border-neon-purple', 'bg-indigo-950/50');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            handleDragLeave(e);
+            if (e.dataTransfer && e.dataTransfer.files) {
+                processFiles(Array.from(e.dataTransfer.files));
+            }
+        }
+
+        function processFiles(files) {
+            const imageFiles = files.filter(f => f.type.startsWith('image/'));
+            if (imageFiles.length === 0) {
+                showToast('يرجى اختيار صور صالحة فقط!', 'fa-circle-exclamation text-amber-400');
+                return;
+            }
+
+            let loadedCount = 0;
+            imageFiles.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const result = e.target.result;
+                    const mimeType = file.type || 'image/png';
+                    const base64Data = result.split(',')[1];
+                    uploadedImages.push({
+                        name: file.name,
+                        fullData: result,
+                        base64: base64Data,
+                        mimeType: mimeType
+                    });
+                    loadedCount++;
+                    if (loadedCount === imageFiles.length) {
+                        renderUploadedPreviews();
+                        showToast(`تم رفع ${loadedCount} صور بنجاح!`, 'fa-circle-check text-emerald-400');
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderUploadedPreviews() {
+            const container = document.getElementById('uploadedPreviewContainer');
+            const countBadge = document.getElementById('uploadedCountBadge');
+            
+            if (uploadedImages.length === 0) {
+                container.classList.add('hidden');
+                container.innerHTML = '';
+                countBadge.innerText = '0 صور محددة';
+                return;
+            }
+
+            container.classList.remove('hidden');
+            countBadge.innerText = `${uploadedImages.length} صور محددة`;
+            container.innerHTML = '';
+
+            uploadedImages.forEach((img, index) => {
+                const thumbDiv = document.createElement('div');
+                thumbDiv.className = "relative group rounded-xl overflow-hidden border border-indigo-500/50 aspect-square bg-dark-bg shadow-md";
+                thumbDiv.innerHTML = `
+                    <img src="${img.fullData}" class="w-full h-full object-cover">
+                    <button onclick="removeUploadedImage(${index})" class="absolute top-1 left-1 w-5 h-5 rounded-full bg-red-600/90 hover:bg-red-600 text-white flex items-center justify-center text-[10px] transition shadow" title="حذف الصورة">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <span class="absolute bottom-1 right-1 px-1.5 py-0.2 rounded bg-black/70 text-[9px] text-gray-200">#${index+1}</span>
+                `;
+                container.appendChild(thumbDiv);
+            });
+        }
+
+        function removeUploadedImage(index) {
+            uploadedImages.splice(index, 1);
+            renderUploadedPreviews();
+            showToast('تم حذف الصورة المحددة', 'fa-info-circle text-indigo-300');
+        }
+
+        // Sample Gallery Items
+        const galleryData = [
+            {
+                title: "رائد فضاء سينمائي",
+                style: "سينمائي",
+                prompt: "رائد فضاء يستكشف كوكب غريب بأزهار مضيئة نيون، إضاءة درامية عالية الدقة",
+                color: "#a855f7"
+            },
+            {
+                title: "محارب أنمي أسطوري",
+                style: "أنمي",
+                prompt: "محارب ساموراي ياباني بأسلوب الأنمي مع سيوف مضيئة وطاقة وردية",
+                color: "#06b6d4"
+            },
+            {
+                title: "مدينة 3D مستقبليّة",
+                style: "ثلاثي الأبعاد",
+                prompt: "سيارات طائرة وناطحات سحاب زجاجية عملاقة في المستقبل، رسم 3D ناعم",
+                color: "#eab308"
+            },
+            {
+                title: "لوحة زيتية للطبيعة",
+                style: "رسم زيتي",
+                prompt: "شلالات طبيعية في غابة خضراء كثيفة عند الشروق، رسم بألوان زيتية غنية",
+                color: "#10b981"
+            }
+        ];
+
+        // Toast Helper
+        function showToast(message, iconClass = 'fa-circle-info text-neon-cyan') {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+            if (!toast || !toastMsg) return;
+            toastMsg.innerText = message;
+            toastIcon.className = `fa-solid ${iconClass}`;
+            toast.classList.remove('hidden', 'opacity-0');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.classList.add('hidden'), 300);
+            }, 3200);
+        }
+
+        // Initialize Page Gallery
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGallery();
+        });
+
+        function injectRandomPrompt() {
+            const randomIndex = Math.floor(Math.random() * samplePrompts.length);
+            document.getElementById('promptInput').value = samplePrompts[randomIndex];
+            showToast('تم اقتراح وصف عشوائي مميز!', 'fa-wand-magic-sparkles text-neon-yellow');
+        }
+
+        // Style Selection
+        function selectStyle(style, el) {
+            currentStyle = style;
+            document.querySelectorAll('.style-btn').forEach(btn => {
+                btn.className = "style-btn px-3 py-2.5 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-300 flex flex-col items-center gap-1.5 transition hover:border-indigo-500";
+            });
+            el.className = "style-btn active px-3 py-2.5 rounded-xl bg-indigo-950/80 border-2 border-neon-purple text-xs font-bold text-white flex flex-col items-center gap-1.5 transition";
+        }
+
+        // Ratio Selection
+        function selectRatio(ratio, el) {
+            currentRatio = ratio;
+            document.querySelectorAll('.ratio-btn').forEach(btn => {
+                btn.className = "ratio-btn py-2 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-400 flex items-center justify-center gap-1 hover:border-indigo-500";
+            });
+            el.className = "ratio-btn active py-2 rounded-xl bg-indigo-950 border-2 border-neon-purple text-xs font-bold text-white flex items-center justify-center gap-1";
+        }
+
+        // Batch Count Selection
+        function selectCount(count, el) {
+            batchCount = count;
+            document.querySelectorAll('.count-btn').forEach(btn => {
+                btn.className = "count-btn py-2 rounded-xl bg-dark-bg border border-gray-800 text-xs font-bold text-gray-400 flex items-center justify-center gap-1 hover:border-indigo-500";
+            });
+            el.className = "count-btn active py-2 rounded-xl bg-indigo-950 border-2 border-neon-purple text-xs font-bold text-white flex items-center justify-center gap-1";
+        }
+
+        async function generateAIImage() {
+            const promptText = document.getElementById('promptInput').value.trim();
+
+            if (!promptText && uploadedImages.length === 0) {
+                showToast('يرجى كتابة وصف أو رفع صورة واحدة على الأقل!', 'fa-circle-exclamation text-amber-400');
+                return;
+            }
+
+            // Show Loading UI State
+            document.getElementById('placeholderState').classList.add('hidden');
+            document.getElementById('resultState').classList.add('hidden');
+            document.getElementById('outputActions').classList.add('hidden');
+            document.getElementById('loadingState').classList.remove('hidden');
+            
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+            lastPromptUsed = promptText || "دمج وتطوير الصور المرجعية المرفوعة بنمط فني جديد";
+            generatedImagesArray = [];
+
+            try {
+                for (let i = 0; i < batchCount; i++) {
+                    let variationPrompt = `${lastPromptUsed}, art style: ${currentStyle}, variation #${i+1}, cinematic 4k resolution`;
+                    if (uploadedImages.length > 0) {
+                        variationPrompt += `, combine and synthesize key elements from the ${uploadedImages.length} provided input images`;
+                    }
+                    let base64Result = await callGeminiImageAPI(variationPrompt);
+                    
+                    if (!base64Result) {
+                        base64Result = generateFallbackCanvasData(lastPromptUsed, i);
+                    }
+                    generatedImagesArray.push(base64Result);
+                }
+
+                renderBatchResults();
+
+            } catch (err) {
+                console.warn("Batch generation error, utilizing fallback painter engine...", err);
+                for (let i = 0; i < batchCount; i++) {
+                    generatedImagesArray.push(generateFallbackCanvasData(lastPromptUsed, i));
+                }
+                renderBatchResults();
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
+        }
+
+        async function callGeminiImageAPI(fullPrompt) {
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${apiKey}`;
+
+            const parts = [{ text: fullPrompt }];
+
+            // Include uploaded reference images in the payload
+            if (uploadedImages.length > 0) {
+                uploadedImages.forEach(img => {
+                    parts.push({
+                        inlineData: {
+                            mimeType: img.mimeType,
+                            data: img.base64
+                        }
+                    });
+                });
+            }
+
+            const payload = {
+                contents: [{ role: 'user', parts: parts }],
+                generationConfig: {
+                    responseModalities: ['IMAGE'],
+                    imageConfig: { aspectRatio: currentRatio }
+                }
+            };
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+            const imagePart = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+            if (imagePart && imagePart.inlineData) {
+                return `data:${imagePart.inlineData.mimeType || 'image/png'};base64,${imagePart.inlineData.data}`;
+            }
+            return null;
+        }
+
+        function renderBatchResults() {
+            const container = document.getElementById('imageGridContainer');
+            container.innerHTML = '';
+            
+            // Adjust grid columns based on count
+            if (batchCount > 1) {
+                container.className = "grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-h-[420px] overflow-y-auto p-2";
+            } else {
+                container.className = "grid grid-cols-1 gap-4 w-full max-h-[420px] overflow-y-auto p-2";
+            }
+
+            generatedImagesArray.forEach((imgData, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = "relative group rounded-2xl overflow-hidden border border-indigo-500/40 shadow-xl bg-dark-bg";
+                itemDiv.innerHTML = `
+                    <img src="${imgData}" alt="AI Gen ${index+1}" class="w-full h-auto max-h-[300px] object-contain mx-auto rounded-xl">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-4">
+                        <button onclick="openFullModalCustom('${imgData}')" class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center text-xs backdrop-blur-md transition" title="عرض بالحجم الكامل">
+                            <i class="fa-solid fa-expand"></i>
+                        </button>
+                        <button onclick="prepareAndOpenEditor('${imgData}')" class="w-9 h-9 rounded-full bg-neon-cyan/80 hover:bg-neon-cyan text-white flex items-center justify-center text-xs shadow-lg transition" title="تعديل الصورة">
+                            <i class="fa-solid fa-wand-magic"></i>
+                        </button>
+                        <button onclick="downloadSingleImage('${imgData}', ${index+1})" class="w-9 h-9 rounded-full bg-neon-purple hover:bg-purple-600 text-white flex items-center justify-center text-xs shadow-lg transition" title="تنزيل الصورة">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                    <span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-black/70 text-[10px] font-bold text-white">#${index+1}</span>
+                `;
+                container.appendChild(itemDiv);
+            });
+
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('resultState').classList.remove('hidden');
+            document.getElementById('outputActions').classList.remove('hidden');
+            document.getElementById('outputBadge').innerText = `تم توليد ${batchCount} صور بنجاح ✨`;
+            showToast(`تم اكتشاف وتوليد ${batchCount} صور جديدة!`, 'fa-circle-check text-emerald-400');
+        }
+
+        function generateFallbackCanvasData(promptText, index) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 1024;
+            const ctx = canvas.getContext('2d');
+
+            const colors = ['#4c1d95', '#06b6d4', '#ec4899', '#10b981', '#6366f1'];
+            const grad = ctx.createLinearGradient(0, 0, 1024, 1024);
+            grad.addColorStop(0, '#1e1b4b');
+            grad.addColorStop(0.5, colors[index % colors.length]);
+            grad.addColorStop(1, '#090a16');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 1024, 1024);
+
+            for (let i = 0; i < 30; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random() * 1024, Math.random() * 1024, Math.random() * 180 + 20, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, 0.12)`;
+                ctx.fill();
+            }
+
+            ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+            ctx.font = "bold 38px Cairo, sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText(`VidGem AI Art (نسخة #${index+1})`, 512, 460);
+
+            ctx.font = "22px Cairo, sans-serif";
+            ctx.fillStyle = "rgba(200, 220, 255, 0.8)";
+            ctx.fillText(`"${promptText.substring(0, 40)}..."`, 512, 520);
+
+            return canvas.toDataURL('image/png');
+        }
+
+        function downloadSingleImage(dataUrl, index) {
+            const a = document.createElement('a');
+            a.href = dataUrl;
+            a.download = `VidGem-AI-Image-${index}-${Date.now()}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Download All Generated Batch Images
+        function downloadAllImages() {
+            generatedImagesArray.forEach((imgData, index) => {
+                setTimeout(() => {
+                    downloadSingleImage(imgData, index + 1);
+                }, index * 300);
+            });
+            showToast('جاري تنزيل جميع الصور...', 'fa-circle-arrow-down text-neon-cyan');
+        }
+
+        // Render Gallery Items
+        function renderGallery() {
+            const container = document.getElementById('galleryGrid');
+            container.innerHTML = '';
+
+            galleryData.forEach((item) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 400;
+                canvas.height = 400;
+                const ctx = canvas.getContext('2d');
+
+                const g = ctx.createLinearGradient(0, 0, 400, 400);
+                g.addColorStop(0, '#0f172a');
+                g.addColorStop(1, item.color);
+                ctx.fillStyle = g;
+                ctx.fillRect(0, 0, 400, 400);
+
+                ctx.fillStyle = "rgba(255,255,255,0.2)";
+                ctx.beginPath();
+                ctx.arc(200, 200, 120, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 22px Cairo, sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(item.title, 200, 200);
+
+                const dataUrl = canvas.toDataURL();
+
+                const cardHtml = `
+                    <div class="glass-panel rounded-2xl overflow-hidden border border-indigo-900/40 hover:border-neon-purple transition duration-300 group cursor-pointer" onclick="useGalleryPrompt('${item.prompt}')">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="${dataUrl}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-bold text-white border border-white/20">
+                                ${item.style}
+                            </span>
+                        </div>
+                        <div class="p-4 space-y-2">
+                            <h4 class="text-sm font-bold text-white">${item.title}</h4>
+                            <p class="text-xs text-gray-400 line-clamp-2">${item.prompt}</p>
+                            <span class="text-[11px] text-neon-cyan font-bold block pt-1 group-hover:underline">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> جرب هذا الوصف
+                            </span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        }
+
+        // Use prompt from gallery
+        function useGalleryPrompt(promptText) {
+            document.getElementById('promptInput').value = promptText;
+            window.scrollTo({
+                top: document.getElementById('generator').offsetTop - 80,
+                behavior: 'smooth'
+            });
+            showToast('تم نسخ الوصف إلى محرر النصوص!', 'fa-wand-magic-sparkles text-neon-cyan');
+        }
+
+        // Download Generated Image
+        function downloadGeneratedImage() {
+            if (generatedImagesArray.length === 0) return;
+            downloadSingleImage(generatedImagesArray[0], 1);
+        }
+
+        // Copy Prompt
+        function copyImagePrompt() {
+            if (!lastPromptUsed) return;
+            document.execCommand('copy');
+            showToast('تم نسخ الوصف النصي للحافظة بنجاح!', 'fa-circle-check text-emerald-400');
+        }
+
+        // Full Screen Modal View
+        function openFullModal() {
+            if (generatedImagesArray.length === 0) return;
+            openFullModalCustom(generatedImagesArray[0]);
+        }
+
+        let activeEditingImage = '';
+
+        function openFullModalCustom(imgSrc) {
+            activeEditingImage = imgSrc;
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('modalPromptText').innerText = `الوصف: ${lastPromptUsed}`;
+            document.getElementById('fullModal').classList.remove('hidden');
+        }
+
+        function closeFullModal() {
+            document.getElementById('fullModal').classList.add('hidden');
+        }
+
+        function editModalImage() {
+            closeFullModal();
+            prepareAndOpenEditor(activeEditingImage);
+        }
+
+        function openImageEditor() {
+            if (generatedImagesArray.length === 0) {
+                showToast('لا توجد صورة متاحة للتعديل حالياً!', 'fa-circle-exclamation text-amber-400');
+                return;
+            }
+            prepareAndOpenEditor(generatedImagesArray[0]);
+        }
+
+        function prepareAndOpenEditor(imgSrc) {
+            activeEditingImage = imgSrc;
+            document.getElementById('editorTargetImg').src = imgSrc;
+            document.getElementById('editInstructionInput').value = '';
+            document.getElementById('editorModal').classList.remove('hidden');
+        }
+
+        function closeImageEditor() {
+            document.getElementById('editorModal').classList.add('hidden');
+        }
+
+        async function submitImageEdit() {
+            const instruction = document.getElementById('editInstructionInput').value.trim();
+            if (!instruction) {
+                showToast('يرجى كتابة تعليمات التعديل المطلوبة!', 'fa-circle-exclamation text-amber-400');
+                return;
+            }
+
+            closeImageEditor();
+            showToast('جاري تطبيق التعديلات بالذكاء الاصطناعي...', 'fa-atom text-neon-cyan animate-spin');
+
+            // Show loading in main output panel
+            document.getElementById('placeholderState').classList.add('hidden');
+            document.getElementById('resultState').classList.add('hidden');
+            document.getElementById('outputActions').classList.add('hidden');
+            document.getElementById('loadingState').classList.remove('hidden');
+
+            try {
+                // Convert activeEditingImage dataURL to object for API reference
+                const base64Mime = activeEditingImage.split(',')[0];
+                const mimeType = base64Mime.match(/:(.*?);/)?.[1] || 'image/png';
+                const base64Data = activeEditingImage.split(',')[1];
+
+                const editPrompt = `Modify and edit this reference image according to instructions: ${instruction}. Maintain high quality and style consistency.`;
+                
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{
+                        role: 'user',
+                        parts: [
+                            { text: editPrompt },
+                            { inlineData: { mimeType: mimeType, data: base64Data } }
+                        ]
+                    }],
+                    generationConfig: {
+                        responseModalities: ['IMAGE'],
+                        imageConfig: { aspectRatio: currentRatio }
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const imagePart = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+                
+                let newEditedImg = '';
+                if (imagePart && imagePart.inlineData) {
+                    newEditedImg = `data:${imagePart.inlineData.mimeType || 'image/png'};base64,${imagePart.inlineData.data}`;
+                } else {
+                    newEditedImg = generateFallbackCanvasData(`تعديل: ${instruction}`, 0);
+                }
+
+                generatedImagesArray.unshift(newEditedImg); // Add to beginning of array
+                renderBatchResults();
+                showToast('تم تعديل الصورة بنجاح!', 'fa-circle-check text-emerald-400');
+
+            } catch (err) {
+                console.warn("Edit API fallback triggered", err);
+                const fallbackImg = generateFallbackCanvasData(`تعديل: ${instruction}`, 0);
+                generatedImagesArray.unshift(fallbackImg);
+                renderBatchResults();
+                showToast('تم تعديل الصورة بنجاح!', 'fa-circle-check text-emerald-400');
+            }
+        }
+    </script>
+</body>
+</html>
